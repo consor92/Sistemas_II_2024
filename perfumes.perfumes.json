@@ -1,0 +1,238 @@
+[{
+  "_id": {
+    "$oid": "672d3a1a41b9c4b8a7488a10"
+  },
+  "codigo": 2157,
+  "nombre": "spiced rum",
+  "stock": 30,
+  "precio": 85,
+  "marca": "exotic perfumes",
+  "tamanio": "100ml",
+  "descripcion": "A rich fragrance with spiced rum and vanilla.",
+  "categoria": "oriental",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672d3a3541b9c4b8a7488a12"
+  },
+  "codigo": 8236,
+  "nombre": "coconut dream",
+  "stock": 35,
+  "precio": 29.99,
+  "marca": "tropical essence",
+  "tamanio": "200ml",
+  "descripcion": "A tropical fragrance with coconut and vanilla.",
+  "categoria": "dulce",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672d3a4241b9c4b8a7488a14"
+  },
+  "codigo": 7325,
+  "nombre": "earthy musk",
+  "stock": 12,
+  "precio": 49.99,
+  "marca": "earthy scents",
+  "tamanio": "80ml",
+  "descripcion": "A grounded fragrance with musk and wood.",
+  "categoria": "amaderado",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672d3a5041b9c4b8a7488a16"
+  },
+  "codigo": 6534,
+  "nombre": "apple blossom",
+  "stock": 28,
+  "precio": 39.99,
+  "marca": "fresh breeze",
+  "tamanio": "100ml",
+  "descripcion": "A fresh fragrance with green apple and floral notes.",
+  "categoria": "flora",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672d3a5841b9c4b8a7488a18"
+  },
+  "codigo": 5412,
+  "nombre": "rose garden",
+  "stock": 45,
+  "precio": 59,
+  "marca": "floral boutique",
+  "tamanio": "200ml",
+  "descripcion": "A delicate rose fragrance perfect for any occasion.",
+  "categoria": "flora",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672d3a6341b9c4b8a7488a1a"
+  },
+  "codigo": 4321,
+  "nombre": "oriental jasmine",
+  "stock": 12,
+  "precio": 59.99,
+  "marca": "exotic perfumes",
+  "tamanio": "100ml",
+  "descripcion": "A floral oriental fragrance with jasmine and musk.",
+  "categoria": "oriental",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672d3a6c41b9c4b8a7488a1c"
+  },
+  "codigo": 2134,
+  "nombre": "chocolate delight",
+  "stock": 22,
+  "precio": 39.99,
+  "marca": "sweet temptations",
+  "tamanio": "75ml",
+  "descripcion": "A sweet and indulgent fragrance with chocolate notes.",
+  "categoria": "dulce",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672d3a7841b9c4b8a7488a20"
+  },
+  "codigo": 1024,
+  "nombre": "fresh citrus",
+  "stock": 18,
+  "precio": 49.5,
+  "marca": "citrus grove",
+  "tamanio": "100ml",
+  "descripcion": "A sharp, citrusy fragrance with orange and grapefruit.",
+  "categoria": "citrico",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672d3a7f41b9c4b8a7488a24"
+  },
+  "codigo": 9152,
+  "nombre": "lavender bliss",
+  "stock": 60,
+  "precio": 19.99,
+  "marca": "relaxing scents",
+  "tamanio": "250ml",
+  "descripcion": "A soothing fragrance with lavender and chamomile.",
+  "categoria": "flora",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672d3a8741b9c4b8a7488a28"
+  },
+  "codigo": 8243,
+  "nombre": "spicy woods",
+  "stock": 20,
+  "precio": 65.99,
+  "marca": "woody aroma",
+  "tamanio": "120ml",
+  "descripcion": "A warm fragrance with spicy and woody undertones.",
+  "categoria": "amaderado",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672d3a8e41b9c4b8a7488a2a"
+  },
+  "codigo": 7324,
+  "nombre": "citrus breeze",
+  "stock": 35,
+  "precio": 25.99,
+  "marca": "sunshine scents",
+  "tamanio": "50ml",
+  "descripcion": "A fresh and invigorating citrus blend.",
+  "categoria": "citrico",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672d3a9341b9c4b8a7488a2c"
+  },
+  "codigo": 6541,
+  "nombre": "mango paradise",
+  "stock": 50,
+  "precio": 44.99,
+  "marca": "tropical breeze",
+  "tamanio": "100ml",
+  "descripcion": "A sweet tropical fragrance with notes of ripe mango.",
+  "categoria": "dulce",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672d3a9c41b9c4b8a7488a2e"
+  },
+  "codigo": 5433,
+  "nombre": "amber oud",
+  "stock": 10,
+  "precio": 89.99,
+  "marca": "luxury perfumes",
+  "tamanio": "75ml",
+  "descripcion": "A deep, oriental fragrance with amber and oud wood.",
+  "categoria": "oriental",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672d3aa241b9c4b8a7488a30"
+  },
+  "codigo": 4312,
+  "nombre": "citrus splash",
+  "stock": 40,
+  "precio": 29.99,
+  "marca": "fresh breeze",
+  "tamanio": "200ml",
+  "descripcion": "A zesty, refreshing scent with citrus and lime.",
+  "categoria": "citrico",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672d3aa941b9c4b8a7488a32"
+  },
+  "codigo": 3245,
+  "nombre": "cedar wood",
+  "stock": 25,
+  "precio": 59.99,
+  "marca": "wooden secrets",
+  "tamanio": "150ml",
+  "descripcion": "A rich, woody scent with hints of cedar and sandalwood.",
+  "categoria": "amaderado",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672d3aaf41b9c4b8a7488a34"
+  },
+  "codigo": 2021,
+  "nombre": "vanilla dream",
+  "stock": 15,
+  "precio": 39.99,
+  "marca": "sweet perfumes",
+  "tamanio": "50ml",
+  "descripcion": "A warm and sweet vanilla fragrance.",
+  "categoria": "dulce",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672d3ab741b9c4b8a7488a38"
+  },
+  "codigo": 1023,
+  "nombre": "jasmine bloom",
+  "stock": 30,
+  "precio": 49.99,
+  "marca": "flora essence",
+  "tamanio": "100ml",
+  "descripcion": "A fresh floral fragrance with notes of jasmine and rose.",
+  "categoria": "flora",
+  "__v": 0
+}]
