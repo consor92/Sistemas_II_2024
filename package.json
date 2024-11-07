@@ -5,7 +5,7 @@
 
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "NODE_ENV=development nodemon ./bin/www ",
+    "dev": "nodemon ./bin/www ",
     "format": "prettier --write '**/*.{js,json,md}'",
     "lint": "eslint . --ext .js",
     "migrate": "migrate-mongo",
