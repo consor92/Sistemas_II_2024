@@ -14,13 +14,19 @@ import Eliminar from './modules/Eliminar'
 import Productos from './modules/Productos'
 import Perfume from './modules/Mostrar/modal'
 
+
+
 function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
+      <BrowserRouter
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true
+        }}>
         <Routes>
-        <Route element={<LayoutE />}>
+          <Route element={<LayoutE />}>
             <Route path="/" element={<Productos />} />
             <Route path="/producto/:codigo" element={<Perfume />} />
           </Route>

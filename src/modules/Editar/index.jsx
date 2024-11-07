@@ -1,65 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import {
     Table,
     Input,
     Space,
     Button,
     Card,
-    Modal,
-    message,
     Tag,
-    Tooltip
+    Tooltip,
+    Flex,
+    Spin
 } from 'antd';
 import {
     SearchOutlined,
     EditOutlined,
-    EyeOutlined,
-    DeleteOutlined,
-    CheckOutlined
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
 const PerfumeTable = () => {
     const [searchText, setSearchText] = useState({});
     const [selectedRows, setSelectedRows] = useState([]);
+    const [data, setProducto] = React.useState(null);
+    const [loading, setLoading] = React.useState(false);
+    const [itemSize, setItemSize] = React.useState(5);
+
     const navigate = useNavigate();
 
-    // Datos de ejemplo
-    const data = [
-        {
-            codigo: 'P001',
-            name: 'Light Blue',
-            brand: 'Dolce & Gabbana',
-            category: 'Cítrico',
-            size: 100,
-            price: 99.99,
-            stock: 15
-        },
-        {
-            codigo: 'P002',
-            name: 'Jadore',
-            brand: 'Dior',
-            category: 'Floral',
-            size: 50,
-            price: 120.00,
-            stock: 0
-        },
-        {
-            codigo: 'P003',
-            name: 'Acqua di Gio',
-            brand: 'Giorgio Armani',
-            category: 'Amaderado',
-            size: 75,
-            price: 85.50,
-            stock: -2
-        },
-    ];
+    useEffect(() => {
+        fetch(`${window.URL_BASE}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true'
+          },
+        })
+          .then((res) => res.json())
+          .then((dat) => { setProducto(dat); setLoading(true); })
+      }, [])
 
     const handleAction = (record) => {
         navigate(`/backend/edit/${record.codigo}`);
     };
-
-
 
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
@@ -94,7 +73,6 @@ const PerfumeTable = () => {
                 : '',
     });
 
-
     const columns = [
         {
             title: 'Código',
@@ -105,33 +83,33 @@ const PerfumeTable = () => {
         },
         {
             title: 'Nombre',
-            dataIndex: 'name',
-            key: 'name',
-            ...getColumnSearchProps('name'),
+            dataIndex: 'nombre',
+            key: 'nombre',
+            ...getColumnSearchProps('nombre'),
         },
         {
             title: 'Marca',
-            dataIndex: 'brand',
-            key: 'brand',
-            ...getColumnSearchProps('brand'),
+            dataIndex: 'marca',
+            key: 'marca',
+            ...getColumnSearchProps('marca'),
         },
         {
             title: 'Categoría',
-            dataIndex: 'category',
-            key: 'category',
-            ...getColumnSearchProps('category'),
+            dataIndex: 'categoria',
+            key: 'categoria',
+            ...getColumnSearchProps('categoria'),
         },
         {
             title: 'Tamaño (ml)',
-            dataIndex: 'size',
-            key: 'size',
+            dataIndex: 'tamanio',
+            key: 'tamanio',
             sorter: (a, b) => a.size - b.size,
             width: '120px',
         },
         {
             title: 'Precio',
-            dataIndex: 'price',
-            key: 'price',
+            dataIndex: 'precio',
+            key: 'precio',
             sorter: (a, b) => a.price - b.price,
             render: (text) => `$${text.toFixed(2)}`,
             width: '120px',
@@ -168,29 +146,37 @@ const PerfumeTable = () => {
 
     return (
         <Card>
-            <div style={{
-                marginBottom: 16,
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
-            }}>
-                <h2>Gestión de Productos</h2>
+            {loading ?
+                <>
+                    <div style={{
+                        marginBottom: 16,
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                    }}>
+                        <h2>Gestión de Productos</h2>
 
-            </div>
-            <Table
-                columns={columns}
-                dataSource={data}
-                rowKey="codigo"
-                pagination={{
-                    pageSize: 10,
-                    showSizeChanger: true,
-                    showTotal: (total) => `Total ${total} items`
-                }}
-                rowClassName={(record, index) =>
-                    index % 2 === 0 ? 'table-row-light' : 'table-row-dark'
-                }
-
-            />
+                    </div>
+                    <Table
+                        columns={columns}
+                        dataSource={data}
+                        rowKey="codigo"
+                        onChange={(value)=>{setItemSize(value.pageSize)}}
+                        pagination={{
+                            pageSize: itemSize,
+                            showSizeChanger: true,
+                            showTotal: (total) => `Total ${total} items`
+                        }}
+                        rowClassName={(record, index) =>
+                            index % 2 === 0 ? 'table-row-light' : 'table-row-dark'
+                        }
+                    />
+                </>
+                :
+                <Flex align="center" gap="middle">
+                    <Spin size="large" />
+                </Flex>
+            }
         </Card>
     );
 };

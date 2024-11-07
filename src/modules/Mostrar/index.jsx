@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Table,
     Input,
@@ -6,9 +6,10 @@ import {
     Button,
     Card,
     Modal,
-    message,
     Tag,
-    Tooltip
+    Tooltip,
+    Flex,
+    Spin
 } from 'antd';
 
 import {
@@ -17,49 +18,55 @@ import {
 } from '@ant-design/icons';
 
 import ViewPerfume from '../Mostrar/modal'
-import { useNavigate } from 'react-router-dom';
+
 
 const PerfumeTable = ({ mode = 'view' }) => {
     const [searchText, setSearchText] = useState({});
     const [selectedRows, setSelectedRows] = useState([]);
-    const navigate = useNavigate();
 
-    // Datos de ejemplo
-    const data = [
-        {
-            codigo: 1,
-            nombre: 'Light Blue',
-            marca: 'Dolce & Gabbana',
-            categoria: 'Cítrico',
-            tamaño: 100,
-            precio: 99.99,
-            stock: 15,
-            descripcion: 'lalalalalalalalalalalalallaa',
-            imagen: 'url-imagen-1'
-        },
-    ];
+    const [data, setProducto] = React.useState(null);
+    const [open, setOpen] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
+    const [LoadingModal, setLoadingModal] = React.useState(false);
+    const [itemSize, setItemSize] = React.useState(5);
+    const [codigo, setCodigo] = React.useState(null);
 
     const handleAction = (record) => {
+        fetch(`${window.URL_BASE}/codigo/${record.codigo}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true'
+            },
+        })
+            .then((res) => res.json())
+            .then((dat) => setCodigo(dat));
         showLoading(record);
     };
 
 
+    useEffect(() => {
+        fetch(`${window.URL_BASE}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true'
+            },
+        })
+            .then((res) => res.json())
+            .then((dat) => { setProducto(dat); setLoading(true); })
+    }, [])
 
-    const [idProducto, setProducto] = React.useState(null);
-    const [open, setOpen] = React.useState(false);
-    const [loading, setLoading] = React.useState(true);
+
 
     const showLoading = () => {
         setOpen(true);
-        setLoading(true);
-
-        // Simple loading mock. You should add cleanup logic in real world.
+        setLoadingModal(true);
         setTimeout(() => {
-            setLoading(false);
-            setProducto( data );
-            //consultar a la API y cargar los datos con setProducto
-        }, 2000);
+            setLoadingModal(false);
+        }, 500);
     };
+
 
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
@@ -122,8 +129,8 @@ const PerfumeTable = ({ mode = 'view' }) => {
         },
         {
             title: 'Tamaño (ml)',
-            dataIndex: 'tamaño',
-            key: 'tamaño',
+            dataIndex: 'tamanio',
+            key: 'tamanio',
             sorter: (a, b) => a.size - b.size,
             width: '120px',
         },
@@ -168,28 +175,42 @@ const PerfumeTable = ({ mode = 'view' }) => {
     return (
         <>
             <Card>
-                <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between' }}>
-                    <h2>Ver producto</h2>
-                </div>
-                <Table
-                    columns={columns}
-                    dataSource={data}
-                    rowKey="codigo"
-                    pagination={{
-                        pageSize: 10,
-                        showSizeChanger: true,
-                        showTotal: (total) => `Total ${total} items`
-                    }}
-                />
+
+
+                {loading ?
+                    <>
+                        <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between' }}>
+                            <h2>Ver producto</h2>
+                        </div>
+
+                        <Table
+                            columns={columns}
+                            dataSource={data}
+                            rowKey="codigo"
+                            onChange={(value) => { setItemSize(value.pageSize) }}
+                            pagination={{
+                                pageSize: itemSize,
+                                showSizeChanger: true,
+                                showTotal: (total) => `Total ${total} items`
+                            }}
+                        />
+                    </>
+                    :
+                    <Flex align="center" gap="middle">
+                        <Spin size="large" />
+                    </Flex>
+                }
+
             </Card>
 
             <Modal
                 width={"80%"}
-                loading={loading}
+                loading={LoadingModal}
                 open={open}
+                onOk={() => setOpen(false)}
                 onCancel={() => setOpen(false)}
             >
-                <ViewPerfume perfume={idProducto}/>
+                <ViewPerfume perfumeData={codigo} />
             </Modal>
         </>
     );

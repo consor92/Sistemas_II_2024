@@ -1,66 +1,68 @@
-import React, { useState } from 'react';
-import { 
-  Table, 
-  Input, 
-  Space, 
-  Button, 
-  Card, 
-  Modal, 
-  message, 
+import React, { useEffect, useState } from 'react';
+import {
+  Table,
+  Input,
+  Space,
+  Button,
+  Card,
+  Modal,
+  message,
   Tag,
-  Tooltip 
-} from 'antd';
-import { 
-  SearchOutlined, 
+  Tooltip,
+  Flex,
+  Spin
+} from 'antd'
+  ;
+import {
+  SearchOutlined,
   DeleteOutlined,
-  CheckOutlined 
+  CheckOutlined
 } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
 
 const PerfumeTable = () => {
-    const onFinish = (values) => {
-        console.log('Received values:', values);
-        message.success('Perfumes eliminado exitosamente!');
-      };
-
-
-
-      
 
   const [searchText, setSearchText] = useState({});
   const [selectedRows, setSelectedRows] = useState([]);
-  const navigate = useNavigate();
-  
-  // Datos de ejemplo
-  const data = [
-    {
-      codigo: 'P001',
-      name: 'Light Blue',
-      brand: 'Dolce & Gabbana',
-      category: 'Cítrico',
-      size: 100,
-      price: 99.99,
-      stock: 15
-    },
-    {
-      codigo: 'P002',
-      name: 'Jadore',
-      brand: 'Dior',
-      category: 'Floral',
-      size: 50,
-      price: 120.00,
-      stock: 0
-    },
-    {
-      codigo: 'P003',
-      name: 'Acqua di Gio',
-      brand: 'Giorgio Armani',
-      category: 'Amaderado',
-      size: 75,
-      price: 85.50,
-      stock: -2
-    },
-  ];
+  const [data, setProducto] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [itemSize, setItemSize] = useState(5);
+  const [refresh, setRefresh] = useState(false);
+
+
+
+  const onFinish = async (values) => {
+    try {
+      const response = await fetch(`${window.URL_BASE}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true'
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+
+      message.success('Perfumes eliminados exitosamente!');
+    } catch (error) {
+      message.error('Error en la eliminacion');
+    }
+  };
+
+
+  useEffect(() => {
+    fetch(`${window.URL_BASE}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true'
+      },
+    })
+      .then((res) => res.json())
+      .then((dat) => { setProducto(dat); setLoading(true); })
+  }, [refresh])
 
 
 
@@ -78,6 +80,7 @@ const PerfumeTable = () => {
       cancelText: 'Cancelar',
       onOk: () => {
         onFinish(selectedRows);
+        setRefresh(true);
       }
     });
   };
@@ -117,7 +120,6 @@ const PerfumeTable = () => {
   });
 
 
-
   const columns = [
     {
       title: 'Código',
@@ -128,33 +130,33 @@ const PerfumeTable = () => {
     },
     {
       title: 'Nombre',
-      dataIndex: 'name',
-      key: 'name',
-      ...getColumnSearchProps('name'),
+      dataIndex: 'nombre',
+      key: 'nombre',
+      ...getColumnSearchProps('nombre'),
     },
     {
       title: 'Marca',
-      dataIndex: 'brand',
-      key: 'brand',
-      ...getColumnSearchProps('brand'),
+      dataIndex: 'marca',
+      key: 'marca',
+      ...getColumnSearchProps('marca'),
     },
     {
       title: 'Categoría',
-      dataIndex: 'category',
-      key: 'category',
-      ...getColumnSearchProps('category'),
+      dataIndex: 'categoria',
+      key: 'categoria',
+      ...getColumnSearchProps('categoria'),
     },
     {
       title: 'Tamaño (ml)',
-      dataIndex: 'size',
-      key: 'size',
+      dataIndex: 'tamanio',
+      key: 'tamanio',
       sorter: (a, b) => a.size - b.size,
       width: '120px',
     },
     {
       title: 'Precio',
-      dataIndex: 'price',
-      key: 'price',
+      dataIndex: 'precio',
+      key: 'precio',
       sorter: (a, b) => a.price - b.price,
       render: (text) => `$${text.toFixed(2)}`,
       width: '120px',
@@ -191,7 +193,7 @@ const PerfumeTable = () => {
                 }
                 setSelectedRows(newSelected);
               }}
-              style={{ 
+              style={{
                 color: selectedRows.includes(record.codigo) ? '#52c41a' : '#999999'
               }}
             />
@@ -203,37 +205,39 @@ const PerfumeTable = () => {
 
   return (
     <Card>
-      <div style={{ 
-        marginBottom: 16, 
-        display: 'flex', 
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }}>
-        <h2>Gestión de Productos</h2>
-        <Button 
-          type="primary" 
-          danger
-          icon={<DeleteOutlined />}
-          onClick={handleDeleteSelected}
-        >
-          Eliminar Seleccionados ({selectedRows.length})
-        </Button>
-      </div>
+      {loading ?
+        <>
+          <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between' }}>
+            <h2>Gestion producto</h2>
+          </div>
 
-      <Table
-        columns={columns}
-        dataSource={data}
-        rowKey="codigo"
-        pagination={{
-          pageSize: 10,
-          showSizeChanger: true,
-          showTotal: (total) => `Total ${total} items`
-        }}
-        rowClassName={(record, index) => 
-          index % 2 === 0 ? 'table-row-light' : 'table-row-dark'
-        }
-      />
+          <Button
+            type="primary"
+            danger
+            icon={<DeleteOutlined />}
+            onClick={handleDeleteSelected}
+          >
+            Eliminar Seleccionados ({selectedRows.length})
+          </Button>
 
+          <Table
+            columns={columns}
+            dataSource={data}
+            rowKey="codigo"
+            onChange={(value) => { setItemSize(value.pageSize) }}
+            pagination={{
+              pageSize: itemSize,
+              showSizeChanger: true,
+              showTotal: (total) => `Total ${total} items`
+            }}
+          />
+
+        </>
+        :
+        <Flex align="center" gap="middle">
+          <Spin size="large" />
+        </Flex>
+      }
     </Card>
   );
 };

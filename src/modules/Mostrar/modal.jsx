@@ -1,38 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Descriptions, Image, Button } from 'antd';
-import { useParams } from 'react-router-dom';
+import imagen from '../Mostrar/perfume.jfif'
 
 
-const data = [
-  {
-      codigo: 1,
-      nombre: 'Light Blue',
-      marca: 'Dolce & Gabbana',
-      categoria: 'Cítrico',
-      tamaño: 100,
-      precio: 99.99,
-      stock: 15,
-      descripcion: 'lalalalalalalalalalalalallaa',
-      imagen: 'url-imagen-1'
-  },
-];
-
-const PerfumeDetail = ({perfume}) => {
-  const perfumeData = perfume[0] ;
-
-
+const PerfumeDetail = ({perfumeData}) => {
+ 
   return (
     <>
       <div style={{ maxWidth: 800, margin: '0 auto', padding: 24 }}>
-
         <Card title="Detalles del Perfume">
           <div style={{ display: 'flex', gap: 24, marginBottom: 24 }}>
             <Image
-              src={perfumeData.imagen}
+              src={imagen}
               alt={perfumeData.nombre}
               style={{ width: 200, height: 200, objectFit: 'cover' }}
             />
-
             <Descriptions column={1}>
               <Descriptions.Item label="Codigo">{perfumeData.codigo}</Descriptions.Item>
               <Descriptions.Item label="Nombre">{perfumeData.nombre}</Descriptions.Item>

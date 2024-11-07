@@ -23,7 +23,7 @@ function getItem(label, key, icon, children) {
 
 
 const items = [
-  getItem(<Link to="/backend"> Dashboard </Link>, '1', <HomeOutlined />),
+  //getItem(<Link to="/backend"> Dashboard </Link>, '1', <HomeOutlined />),
   getItem(<Link to="/backend/add"> Agregar </Link>, '2', <PlusCircleTwoTone />),
   getItem(<Link to="/backend/edit"> Editar</Link>, '3', <EditTwoTone /> ),
   getItem(<Link to="/backend/delete"> Eliminar </Link>, '4', <DeleteTwoTone />, ),

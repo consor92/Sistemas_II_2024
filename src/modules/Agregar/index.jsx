@@ -1,73 +1,84 @@
-import React, { useState } from 'react';
-import { 
-  Form, 
-  Input, 
-  Button, 
-  Card, 
-  Upload, 
-  Select, 
-  InputNumber, 
+import React, { useState, useRef } from 'react';
+import {
+  Form,
+  Input,
+  Button,
+  Card,
+  Upload,
+  Select,
+  InputNumber,
   Typography,
   message,
-  theme 
+  theme
 } from 'antd';
-import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 const { TextArea } = Input;
 const { Option } = Select;
 
+
+
 const AddPerfumeForm = () => {
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     console.log('Received values:', values);
-    message.success('Perfume agregado exitosamente!');
+    try {
+      const response = await fetch(`${window.URL_BASE}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true'
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+
+      message.success('Perfume agregado exitosamente!');
+      form.setFieldsValue({
+        codigo: '',
+        nombre: '',
+        stock: '',
+        precio: '',
+        marca: '',
+        tamanio: '',
+        descripcion: '',
+        categoria: ''
+      });
+
+    } catch (error) {
+      message.error('Codigo de producto existente');
+    }
   };
-
-
-
-
 
   const [form] = Form.useForm();
-  const [imageUrl, setImageUrl] = useState('');
-
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken()
-
-  const normFile = (e) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
-  };
+  const { token: { colorBgContainer }, } = theme.useToken()
 
   return (
-    <div style={{ 
-      height: '100vh', 
+    <div style={{
+      height: '100vh',
       display: 'flex',
       flexDirection: 'column',
       padding: '20px',
       background: colorBgContainer,
     }}>
-
-      <Title level={3} style={{ 
-        textAlign: 'center', 
+      <Title level={3} style={{
+        textAlign: 'center',
         margin: '0 0 20px 0',
         flex: '0 0 auto'
       }}>
         Agregar Nuevo Perfume
       </Title>
 
-
-      {/* Contenedor con scroll */}
-      <div style={{ 
+      <div style={{
         flex: '1 1 auto',
         overflow: 'auto',
         padding: '0 20px'
       }}>
-        <Card style={{ 
-          maxWidth: '90vh', 
+        <Card style={{
+          maxWidth: '90vh',
           margin: '0 auto',
           marginBottom: '20px'
         }}>
@@ -80,45 +91,11 @@ const AddPerfumeForm = () => {
               stock: 1,
             }}
           >
-            
-            <Form.Item
-              label="Imagen del Perfume"
-              name="imagen"
-              valuePropName="fileList"
-              getValueFromEvent={normFile}
-              rules={[{ required: true, message: 'Por favor sube una imagen' }]}
-            >
-              <Upload.Dragger
-                name="files"
-                action="/upload.do"
-                multiple={false}
-                listType="picture-card"
-                maxCount={1}
-                style={{ height: '200px' }}
-                beforeUpload={(file) => {
-                  const isImage = file.type.startsWith('image/');
-                  if (!isImage) {
-                    message.error('Solo puedes subir archivos de imagen!');
-                  }
-                  return isImage || Upload.LIST_IGNORE;
-                }}
-              >
-                <p className="ant-upload-drag-icon">
-                  <InboxOutlined />
-                </p>
-                <p className="ant-upload-text">
-                  Haz clic o arrastra una imagen aquí
-                </p>
-              </Upload.Dragger>
-            </Form.Item>
-
-            
-
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               <Form.Item
                 label="Nombre del Perfume"
-                name="name"
+                name="nombre"
                 rules={[{ required: true, message: 'Por favor ingresa el nombre' }]}
               >
                 <Input placeholder="Ej: Light Blue" />
@@ -133,7 +110,7 @@ const AddPerfumeForm = () => {
               </Form.Item>
             </div>
 
-            
+
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               <Form.Item
                 label="Categoría"
@@ -150,15 +127,10 @@ const AddPerfumeForm = () => {
 
               <Form.Item
                 label="Tamaño (ml)"
-                name="tamaño"
-                rules={[{ required: true, message: 'Por favor ingresa el tamaño' }]}
+                name="tamanio"
+                rules={[{ required: true, message: 'Por favor ingresa el tamaño', }]}
               >
-                <InputNumber
-                  min={1}
-                  max={1000}
-                  style={{ width: '100%' }}
-                  placeholder="100"
-                />
+                <Input placeholder="100" />
               </Form.Item>
             </div>
 
@@ -173,6 +145,7 @@ const AddPerfumeForm = () => {
                   step={0.01}
                   style={{ width: '100%' }}
                   placeholder="99.99"
+                  controls={false}
                   formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                   parser={value => value.replace(/\$\s?|(,*)/g, '')}
                 />
@@ -187,14 +160,28 @@ const AddPerfumeForm = () => {
                   min={0}
                   style={{ width: '100%' }}
                   placeholder="10"
+                  controls={false}
                 />
               </Form.Item>
             </div>
 
-            
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+              <Form.Item
+                label="Codigo"
+                name="codigo"
+                rules={[{ required: true, message: 'Por favor ingresa el codigo' }]}
+              >
+                <InputNumber
+                  style={{ width: '100%' }}
+                  placeholder="100"
+                  controls={false}
+                />
+              </Form.Item>
+            </div>
+
             <Form.Item
               label="Descripción"
-              name="descripcio"
+              name="descripcion"
               rules={[{ required: true, message: 'Por favor ingresa una descripción' }]}
             >
               <TextArea
@@ -203,7 +190,7 @@ const AddPerfumeForm = () => {
               />
             </Form.Item>
 
-            
+
             <Form.Item style={{ marginBottom: 0 }}>
               <Button type="primary" htmlType="submit" size="large" block>
                 Guardar Perfume
