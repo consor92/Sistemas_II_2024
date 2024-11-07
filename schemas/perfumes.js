@@ -4,7 +4,8 @@ const { Schema } = mongoose
 const perfumeSchema = new Schema({
   codigo: {
       type: Number,          
-      required: true,        
+      required: true,
+      unique: true,        
       trim: true,            
     },
   nombre: { 
@@ -12,15 +13,7 @@ const perfumeSchema = new Schema({
       required: true,        
       lowercase: true,      
       trim: true,            
-      unique: true,         
     },
-  
-    imagen: {
-      type: String,          
-      required: true,        
-      trim: true,            
-    },
-  
     stock: {
       type: Number,          
       required: true,        
@@ -40,7 +33,7 @@ const perfumeSchema = new Schema({
       trim: true,            
     },
   
-    tamaño: {
+    tamanio: {
       type: String,          
       required: true,        
       trim: true,            

@@ -16,6 +16,7 @@ router.get('/tamanio/:tamanio',getTamaño);
 
 //router.delete('/:id',deleteId);
 router.delete('/:codigo',deleteCodigo);
+router.delete('/', deleteArray);
 
 router.put('/:id',updateFull);
 router.patch('/:id',updatePartial);
@@ -36,6 +37,7 @@ async function getCodigo(req, res,next) {
 // Crear un nuevo perfume
 async function add(req, res,next) {
   try {
+    console.log( req.body  )
     const perfume = new Perfume(req.body);
     await perfume.save();
     res.status(201).json(perfume);
@@ -137,6 +139,27 @@ async function deleteCodigo (req, res,next) {
       res.status(500).json({ error: err.message });
     }
   }
+
+// Eliminar un perfume por código
+async function deleteArray (req, res,next) {  
+  try {
+    const codigos = req.body;
+
+    if (!Array.isArray(codigos) || codigos.length === 0) {
+      return res.status(400).json({ message: 'Debe proporcionar al menos un código válido' });
+    }
+
+    const result = await Perfume.deleteMany({ codigo: { $in: codigos } });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'No se encontraron perfumes con los códigos proporcionados' });
+    }
+
+    res.status(200);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
 
 // Actualizar un perfume completo (PUT)
 async function updateFull(req, res,next) {  
