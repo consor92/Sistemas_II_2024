@@ -1,0 +1,27 @@
+
+services:
+  back:
+    build:
+      context: ./back
+    ports:
+      - "2000:2000"
+    env_file:
+      - ./back/.env
+    networks:
+      - app-network
+
+  front:
+    build:
+      context: ./front
+    ports:
+      - "4000:80"
+    env_file:
+      - ./front/.env
+    depends_on:
+      - back
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
