@@ -28,11 +28,11 @@ const PerfumeTable = () => {
   const [itemSize, setItemSize] = useState(5);
   const [refresh, setRefresh] = useState(false);
 
-
+  const apiUrl = import.meta.env.VITE_API_URL;  
 
   const onFinish = async (values) => {
     try {
-      const response = await fetch(`${window.URL_BASE}`, {
+      const response = await fetch(`${apiUrl}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

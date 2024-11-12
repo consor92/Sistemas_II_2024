@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Card, Upload, Select, InputNumber, Typography, message, theme } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const { Title } = Typography;
 const { TextArea } = Input;
 const { Option } = Select;
@@ -16,7 +18,7 @@ const AddPerfumeForm = () => {
   const [data, setProducto] = React.useState(null);
 
   useEffect(() => {
-    fetch(`${window.URL_BASE}/codigo/${codigo}`, {
+    fetch(`${apiUrl}/codigo/${codigo}`, {
       headers: {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true'
@@ -29,7 +31,7 @@ const AddPerfumeForm = () => {
 
   const onFinish = async (values) => {
     try {
-      const response = await fetch(`${window.URL_BASE}/${data._id}`, {
+      const response = await fetch(`${apiUrl}/${data._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

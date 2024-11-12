@@ -16,6 +16,7 @@ const { Title } = Typography;
 const { TextArea } = Input;
 const { Option } = Select;
 
+const apiUrl = import.meta.env.VITE_API_URL;
 
 
 const AddPerfumeForm = () => {
@@ -23,7 +24,7 @@ const AddPerfumeForm = () => {
   const onFinish = async (values) => {
     console.log('Received values:', values);
     try {
-      const response = await fetch(`${window.URL_BASE}`, {
+      const response = await fetch(`${apiUrl}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

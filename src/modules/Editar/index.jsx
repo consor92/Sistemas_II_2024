@@ -14,7 +14,10 @@ import {
     SearchOutlined,
     EditOutlined,
 } from '@ant-design/icons';
+
 import { useNavigate } from 'react-router-dom';
+const apiUrl = import.meta.env.VITE_API_URL;
+
 
 const PerfumeTable = () => {
     const [searchText, setSearchText] = useState({});
@@ -26,7 +29,7 @@ const PerfumeTable = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`${window.URL_BASE}`, {
+        fetch(`${apiUrl}`, {
           headers: {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': 'true'

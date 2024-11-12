@@ -18,7 +18,7 @@ import {
 } from '@ant-design/icons';
 
 import ViewPerfume from '../Mostrar/modal'
-
+const apiUrl = import.meta.env.VITE_URL_BASE;
 
 const PerfumeTable = ({ mode = 'view' }) => {
     const [searchText, setSearchText] = useState({});
@@ -32,7 +32,7 @@ const PerfumeTable = ({ mode = 'view' }) => {
     const [codigo, setCodigo] = React.useState(null);
 
     const handleAction = (record) => {
-        fetch(`${window.URL_BASE}/codigo/${record.codigo}`, {
+        fetch(`${apiUrl}/codigo/${record.codigo}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -46,7 +46,10 @@ const PerfumeTable = ({ mode = 'view' }) => {
 
 
     useEffect(() => {
-        fetch(`${window.URL_BASE}`, {
+        console.log( {apiUrl} 
+            
+        )
+        fetch(`${apiUrl}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
