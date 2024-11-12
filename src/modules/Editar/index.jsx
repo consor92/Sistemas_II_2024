@@ -37,7 +37,7 @@ const PerfumeTable = () => {
       }, [])
 
     const handleAction = (record) => {
-        navigate(`/backend/edit/${record.codigo}`);
+        navigate(`/edit/${record.codigo}`);
     };
 
     const getColumnSearchProps = (dataIndex) => ({

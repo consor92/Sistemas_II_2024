@@ -14,7 +14,12 @@ import Eliminar from './modules/Eliminar'
 import Productos from './modules/Productos'
 import Perfume from './modules/Mostrar/modal'
 
-
+/*
+<Route element={<LayoutE />}>
+  <Route path="/" element={<Productos />} />
+  <Route path="/producto/:codigo" element={<Perfume />} />
+</Route>
+*/
 
 function App() {
 
@@ -26,18 +31,14 @@ function App() {
           v7_relativeSplatPath: true
         }}>
         <Routes>
-          <Route element={<LayoutE />}>
-            <Route path="/" element={<Productos />} />
-            <Route path="/producto/:codigo" element={<Perfume />} />
-          </Route>
 
           <Route element={<LayoutB />}>
-            <Route path="backend" element={<div>Selecciona una opción</div>} /> { }
-            <Route path="backend/add" element={<Agregar />} />
-            <Route path="backend/edit" element={<Editar />} />
-            <Route path="backend/edit/:codigo" element={<FormEditar />} />
-            <Route path="backend/view" element={<Mostrar />} />
-            <Route path="backend/delete" element={<Eliminar />} />
+            <Route path="/" element={<div>Selecciona una opción</div>} /> { }
+            <Route path="/add" element={<Agregar />} />
+            <Route path="/edit" element={<Editar />} />
+            <Route path="/edit/:codigo" element={<FormEditar />} />
+            <Route path="/view" element={<Mostrar />} />
+            <Route path="/delete" element={<Eliminar />} />
           </Route>
 
 
